@@ -1,0 +1,7 @@
+PATH=/usr/bin:/bin
+
+SI_DISTNAME="NoName Linux"
+SI_BACKTITLE="$SI_DISTNAME Installer"
+
+SI_MAX_H="19"
+SI_MAX_W="76"
