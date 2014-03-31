@@ -1,4 +1,5 @@
-PATH=/usr/bin:/bin
+PATH=/usr/bin:/bin:/usr/sbin/:/sbin
+INSTROOT=/
 
 SI_DISTNAME="NoName Linux"
 SI_BACKTITLE="$SI_DISTNAME Installer"

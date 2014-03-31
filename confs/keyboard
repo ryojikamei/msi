@@ -1,1 +1,2 @@
-SI_KBD_DIR="/lib/kbd/keymaps"
+#SI_KBD_DIR="/lib/kbd/keymaps"
+SI_KBD_DIR="/tmp"

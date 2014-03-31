@@ -7,7 +7,6 @@ SI_TITLE=" Keyboard "
 
 #REQUIREMENTS
 #PROGRAM
-#for r in dialog /usr/bin/find; do
 for r in dialog find; do
 	if [ "x`which $r`" == "x" ]; then
 		echo "Essential executable $r is not found!"
@@ -33,12 +32,9 @@ fi
 
 #######################################
 msg="Which keyboard do you have?"
-#KBD_LIST=`/usr/bin/find $KBD_DIR -path $KBD_DIR/include -prune -type f -o -name *map* | cut -f6- ^d'/'`
-KBD_LIST=`find $KBD_DIR -type f -name "*map*" | cut -f6- -d'/' | grep -v ^include | sort`
+KBD_LIST=`tar -tf $KBD_DIR/kmaps.tar.gz`
 for m in $KBD_LIST; do
-	KBD_ITEMS="$KBD_ITEMS $m"
-	KBD_ITEMS="$KBD_ITEMS `basename $m .map.gz | tr [:lower:] [:upper:]`"
-	#KBD_ITEMS="$KBD_ITEMS `basename $m .map.gz | awk '{print toupper(substr($1,1,1))substr($1,2)}'`"
+	KBD_ITEMS="$KBD_ITEMS $m _"
 done
 
 MENU_H=`expr $SI_MAX_H - 8`
@@ -48,7 +44,10 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 echo "" >>../stats/kmap
-KMAP=$KBD_DIR/`cat ../stats/kmap`
+KMAP=`cat ../stats/kmap`
+
+cd /tmp
+tar xf $KBD_DIR/kmaps.tar.gz $KMAP
 clear
-loadkeys $KMAP
+loadkmap < $KMAP
 return $?

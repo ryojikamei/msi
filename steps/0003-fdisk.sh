@@ -7,7 +7,6 @@ SI_TITLE=" Partition table manipulation "
 
 #REQUIREMENTS
 #PROGRAM
-#for r in dialog /usr/bin/find; do
 for r in dialog find; do
 	if [ "x`which $r`" == "x" ]; then
 		echo "Essential executable $r is not found!"
@@ -32,23 +31,30 @@ fi
 fi
 
 #######################################
-msg="Preparing Linux partition and Linux swap partition are required to install Linux. Which keyboard do you have?"
-#KBD_LIST=`/usr/bin/find $KBD_DIR -path $KBD_DIR/include -prune -type f -o -name *map*`
-KBD_LIST=`find $KBD_DIR -type f -name "*map*" | cut -f6- -d'/' | grep -v ^include | sort`
-for m in $KBD_LIST; do
-	KBD_ITEMS="$KBD_ITEMS $m"
-	KBD_ITEMS="$KBD_ITEMS `basename $m .map.gz | tr [:lower:] [:upper:]`"
-	#KBD_ITEMS="$KBD_ITEMS `basename $m .map.gz | awk '{print toupper(substr($1,1,1))substr($1,2)}'`"
+msg="Preparing Linux partition and Linux swap partition are required to install Linux. Which disk do you want to manipulate by fdisk?"
+DISK_ITEMS="Done Everything"
+for l in `$FDISK -l | grep ^"Disk /dev" | tr -d ' '`; do
+	s="/"`echo $l | cut -f1 -d: | cut -f2- -d/`
+	d=`echo $l | cut -f2 -d:`
+	DISK_ITEMS="$DISK_ITEMS $s $d"
 done
 
 MENU_H=`expr $SI_MAX_H - 8`
-dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --menu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $KBD_ITEMS 2>../stats/kmap
-if [ $? -ne 0 ]; then
-	echo "Error choosing keyboard!"
-	exit 1
-fi
-echo "" >>../stats/kmap
-KMAP=$KBD_DIR/`cat ../stats/kmap`
-clear
-loadkeys $KMAP
-return $?
+ret=0
+while [ "$ret" -eq 0 ]; do 
+	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --menu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $DISK_ITEMS 2>../stats/disk
+	ret=$?
+	if [ $? -ne 0 ]; then
+		echo "Error choosing hard disk!"
+		exit 1
+	fi
+	DISK=`grep ^/dev ../stats/disk`
+	if [ "x$DISK" == "x" ]; then
+		ret=2
+	else
+		clear
+		$FDISK `cat ../stats/disk`
+	fi
+done
+
+return $ret
