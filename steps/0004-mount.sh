@@ -127,11 +127,11 @@ while [ "$ret" -eq 3 ]; do
 			ITEM=""
 			;;
 		*)
-			ITEM="/`echo $ITEM | cut -c2- | tr -d [:punct:] | tr [:blank:] _`"
 			if [ "`echo "$ITEM" | cut -c1`" != '/' ]; then
 				error=1
 				err_str="$ITEM:Any mount points should lead with '/'.\n"
 			fi
+			ITEM="/`echo $ITEM | cut -c2- | tr -d [:punct:] | tr [:blank:] _`"
 		esac
 
 		if [ "x$ITEM" == "x" ]; then
@@ -181,10 +181,11 @@ while [ "$ret" -eq 3 ]; do
 	fi
 done
 
-echo "DEBUG:"
-cat ../stats/mount
-printf "$err_str"
-printf "$warn_str"
-echo $ret
+$D_ECHO "DEBUG:"
+$D_CAT ../stats/mount
+$D_PRINTF "$err_str"
+$D_PRINTF "$warn_str"
+$D_ECHO "return: $ret"
+$D_SLEEP
 
 return $ret

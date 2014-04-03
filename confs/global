@@ -8,4 +8,6 @@ SI_MAX_H="19"
 SI_MAX_W="76"
 
 D_ECHO="echo"
-D_SLEEP="sleep 2"
+D_CAT="cat"
+D_PRINTF="printf"
+D_SLEEP="sleep 1"
