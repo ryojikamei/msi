@@ -6,3 +6,6 @@ SI_BACKTITLE="$SI_DISTNAME Installer"
 
 SI_MAX_H="19"
 SI_MAX_W="76"
+
+D_ECHO="echo"
+D_SLEEP="sleep 2"
