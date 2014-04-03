@@ -1,4 +1,4 @@
-PATH=/usr/bin:/bin:/usr/sbin/:/sbin
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
 INSTROOT=/
 
 SI_DISTNAME="NoName Linux"

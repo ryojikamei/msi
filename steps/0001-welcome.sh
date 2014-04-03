@@ -15,7 +15,7 @@ done
 
 #ARCH
 if [ ! -f ../stats/sysinfo ]; then
-../utils/sysinfo
+../utils/sysinfo.sh
 fi
 source ../stats/sysinfo
 
