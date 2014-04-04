@@ -38,7 +38,6 @@ if [ ! -f ../stats/mount ]; then
 fi
 
 #######################################
-#FS_ITEMS="Format_Partitons (All_data_are_wiped_immediately!)"
 # initialize
 rm -f ../stats/part
 for m in `cat ../stats/mount | grep -v '=(none)'`; do
@@ -58,7 +57,7 @@ MENU_H=`expr $SI_MAX_H - 8`
 ret=0
 while [ "$ret" -eq 0 ]; do 
 	# read
-	FS_ITEMS="Format_Partitons (All_data_are_wiped_immediately!)"
+	FS_ITEMS="Continue Done_this_configuration_and_go_next"
 	RADIO_ITEMS=""
 	for l in `cat ../stats/part`; do
 		FS_ITEMS="$FS_ITEMS `echo $l | tr = ' '`"

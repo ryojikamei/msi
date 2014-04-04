@@ -34,7 +34,7 @@ fi
 
 #######################################
 msg="Preparing Linux partition and Linux swap partition are required to install Linux. Which disk do you want to manipulate by fdisk?"
-DISK_ITEMS="Done Everything"
+DISK_ITEMS="Continue Done_this_configuration_and_go_next"
 for l in `$FDISK_L | grep ^"Disk /dev" | tr -d ' '`; do
 	s="/"`echo $l | cut -f1 -d: | cut -f2- -d/`
 	d=`echo $l | cut -f2 -d:`
