@@ -21,5 +21,14 @@ source ../stats/sysinfo
 
 #######################################
 dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --msgbox "Welcome to $SI_DISTNAME Installer" $SI_MAX_H $SI_MAX_W
-#dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --textbox ../LICENSE $SI_MAX_H $SI_MAX_W
 return $?
+
+#msg="Welcome to $SI_DISTNAME Installer! Let's personalize your system."
+
+#SI_DISTNAME="NoName Linux"
+#SI_BACKTITLE="$SI_DISTNAME Installer"
+#SI_HOSTNAME="noname"
+#SI_DOMAINNAME="linux.name"
+#SI_USER="noname"
+
+

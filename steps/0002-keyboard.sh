@@ -3,6 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/keyboard
+source ../stat/personalize
 SI_TITLE=" Choose Keyboard "
 
 #REQUIREMENTS
@@ -49,4 +50,8 @@ KMAP=`cat ../stats/kmap`
 cd /tmp
 tar xf $KBD_DIR/kmaps.tar.gz $KMAP
 loadkmap < $KMAP
-return $?
+ret=$?
+
+$D_CAT ../stats/kmap
+$D_SLEEP
+return $ret

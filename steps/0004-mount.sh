@@ -3,6 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/mount
+source ../stat/personalize  
 SI_TITLE=" Set Mount Point "
 
 #REQUIREMENTS
@@ -150,13 +151,13 @@ while [ "$ret" -eq 3 ]; do
 	fi
 
 	if [ $error -ne 0 ]; then
-		title="Mount point errors"
+		title=" Mount Point Errors "
 		msg="There are problems at mount point configuration.\n${err_str}"
 		dialog --backtitle "$SI_BACKTITLE" --title "$title" --msgbox "$msg" $SI_MAX_H $SI_MAX_W 
 		ret=3
 	fi
 	if [ $warning -ne 0 ]; then
-		title="Mount point warnings"
+		title=" Mount Point Warnings "
 		msg="There are stranges at mount point configuration.\n ${err_str} Can we proceed?"
 		dialog --backtitle "$SI_BACKTITLE" --title "$title" --yesno "$msg" $SI_MAX_H $SI_MAX_W 
 		ret=$?
@@ -169,7 +170,7 @@ while [ "$ret" -eq 3 ]; do
 
 	# final confirm.
 	if [ $ret -eq 0 ]; then
-		title="Confirm Mount point"
+		title="Confirm Mount Point"
 		msg="Mount points are set as follows:\n$PART_ITEMS"
 		dialog --backtitle "$SI_BACKTITLE" --title "$title" --yesno "$msg" $SI_MAX_H $SI_MAX_W 
 		ret=$?

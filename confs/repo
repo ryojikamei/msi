@@ -1,0 +1,2 @@
+DEFAULT_REPOSITORY_PATH="/media/cdrom/Software"
+WGET_CHECK_OPT="--timeout=5"

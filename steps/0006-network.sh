@@ -3,6 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/net
+source ../stat/personalize  
 SI_TITLE=" Configure Network "
 
 #REQUIREMENTS
@@ -22,20 +23,16 @@ source ../stats/sysinfo
 
 #######################################
 # initialize
-rm -f ../stats/net
-for i in `ifconfig -a | grep 'Link encap' | tr -s ' '; do
-	if=`echo $i | cut -f1 -d' '
-	le=`echo $i | cut -f2- -d: | tr ' ' _
-	echo "Auto,$if=$le" >> ../stats/net
-fi
-
+echo "Continue=Done_this_configuration_and_go_next" > ../stats/net
+echo "Basic_Configuration=Configure:Auto,Enable:Auto" >> ../stats/net
+echo "IPv4_Configuration=Configure:Auto,Enable:Auto" >> ../stats/net
+echo "IPv6_Configuration=Configure:Auto,Enable:No" >> ../stats/net
 
 MENU_H=`expr $SI_MAX_H - 8`
 ret=0
-while [ "$ret" -eq 0 ]; do 
+while [ $ret -eq 0 ]; do
 	# read
-	NET_ITEMS="Continue Done_this_configuration_and_go_next"
-	RADIO_ITEMS=""
+	NET_ITEMS=""
 	for l in `cat ../stats/net`; do
 		NET_ITEMS="$NET_ITEMS `echo $l | tr = ' '`"
 	done
@@ -43,78 +40,42 @@ while [ "$ret" -eq 0 ]; do
 	$D_SLEEP
 
 	# show
-	msg="Network configuration xxx"
-	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --menu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/if
+	msg="Network configuration is required if you use networking. Pick a selection to change the settings. NOTE: Currently only eth0 is supported."
+	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --menu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/netconf
 	ret=$?
 	$D_ECHO $ret
 	if [ $ret -ne 0 ]; then
-		echo "Cancel configure netoworking."
-		exit 1
+		echo "Cancel configure networking."
+		#exit 1
+		continue
 	fi
 	$D_SLEEP
-	NIC=`grep , ../stats/if`
-	if [ "x$NIC == "x" ]; then
+
+	NEXT=`cat ../stats/netconf`
+	case $NEXT in
+	"Basic Configuration")
+		./*-network-basics.sh
+		;;
+	"IPv4 Configuration")
+		./*-network-ipv4.sh
+		;;
+	"IPv6 Configuration")
+		./*-network-ipv6.sh
+		;;
+	*)
 		ret=3
-	else
-		tgt_type=`echo $NIC | cut -f1 -d,`
-		tgt_dev=`echo $NIC | cut -f2 -d,`
-		case "$tgt_dev" in
-		eth*)
-			continue
-			;;
-		*)
-			continue
-		esac
-
-
-		exit
-
-		if [ "$tgt_dev" == "Auto" ]; then
-			continue
-		else
-			FS_TYPES="Ext2 Ext3 Ext4 Keep_Current"
-			FS_TYPES_H=4
-			for type in $FS_TYPES; do
-				if [ $type == $tgt_type ]; then
-					flag="on"
-				else
-					flag="off"
-				fi
-				RADIO_ITEMS="$RADIO_ITEMS $type "${type}_Filesystem" $flag"
-				$D_ECHO $RADIO_ITEMS
-				$D_SLEEP
-			done
-		fi
-		msg="What filesystem would you like to use for $tgt_dev?"
-		dialog  --backtitle "$SI_BACKTITLE" --title " Choose Filesystem " --radiolist "$msg" 0 0 $FS_TYPES_H $RADIO_ITEMS 2>../stats/fs-change
-		if [ $? -eq 1 ]; then
-			continue
-		fi
-		#if [ "x`cat ../stats/fs-change`" == "x" ]; then
-		#	continue
-		#fi
-
-		# apply the change
-		mv ../stats/part ../stats/part-prev
-		for l in `cat ../stats/part-prev`; do
-			fsdev=`echo $l | cut -f1 -d=`
-			size=`echo $l | cut -f2 -d=`
-			fs=`echo $fsdev | cut -f1 -d,`
-			dev=`echo $fsdev | cut -f2 -d,`
-			if [ $dev == $tgt_dev ]; then
-				fs=`cat ../stats/fs-change`
-			fi
-			echo "$fs,$dev=$size" >> ../stats/part
-		done
-			
-	fi
+	esac
 
 done
 if [ $ret -ne 1 ]; then
 	ret=0
 fi
 
-$D_ECHO -n "mkfs:"
+$D_ECHO -n "net:"
 $D_ECHO $ret
+$D_CAT ../stats/net
+$D_ECHO -n "last selection:"
+$D_CAT ../stats/netconf
+$D_ECHO ""
 $D_SLEEP
 return $ret

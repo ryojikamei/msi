@@ -3,6 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/fdisk
+source ../stat/personalize  
 SI_TITLE=" Manipulate Partition Table "
 
 #REQUIREMENTS
