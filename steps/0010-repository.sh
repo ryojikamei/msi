@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/repo
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Select Software Repository "
 
 #REQUIREMENTS
@@ -44,7 +44,7 @@ while [ "$ret" -eq 1 ]; do
 	msg="$msg    Local: cdrom://Software\n"
 	msg="$msg    FTP: ftp://ftp.example.org/pub/NNL/1.0/Software\n"
 	msg="$msg    HTTP: http://www.example.org/NNL/1.0/Software"
-	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputbox "$msg" $SI_MAX_H $SI_MAX_W 2> ../stats/repourl
+	dialog --max-input $SI_MAX_L --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputbox "$msg" $SI_MAX_H $SI_MAX_W 2> ../stats/repourl
 	ret=$?
 
 	#Validation

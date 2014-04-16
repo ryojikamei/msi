@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/mount
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Configure Network Basics "
 
 #REQUIREMENTS
@@ -35,10 +35,10 @@ source ../stats/sysinfo
 
 #######################################
 
-#initialize
+#initialize, we take them from stats/personalization
 rm -f ../stats/net-basics
-echo "Host_Name=noname" >> ../stats/net-basics
-echo "Domain_Name=linux.name" >> ../stats/net-basics
+echo "Host_Name=$SI_HOSTNAME" >> ../stats/net-basics
+echo "Domain_Name=$SI_DOMAINNAME" >> ../stats/net-basics
 
 # Main Loop
 MENU_H=`expr $SI_MAX_H - 8`
@@ -64,8 +64,8 @@ while [ "$ret" -eq 3 ]; do
 	done
 
 	# show
-	msg="Set default hostname and domainname. Note that they are overwritten if the dhcpclient was gotten those information."
-	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/net-basics-rename
+	msg="Here we reset default hostname and domainname. Note that they are overwritten if the dhcpclient was gotten those information."
+	dialog --max-input $SI_MAX_I --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/net-basics-rename
 	ret=$?
 
 	# cancel

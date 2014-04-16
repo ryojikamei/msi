@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/net
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Configure Network "
 
 #REQUIREMENTS

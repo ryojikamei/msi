@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/keyboard
-source ../stat/personalize
+source ../stats/personalize
 SI_TITLE=" Choose Keyboard "
 
 #REQUIREMENTS

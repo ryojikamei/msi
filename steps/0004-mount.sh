@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/mount
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Set Mount Point "
 
 #REQUIREMENTS
@@ -76,7 +76,7 @@ while [ "$ret" -eq 3 ]; do
 
 	# show
 	msg="Select partitions and set mount points to install Linux. At least one root(/) partition and swap(swap) partitions are required to install. On some systems /boot partition is required to boot Linux properly."
-	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $PART_ITEMS 2>../stats/mount-rename
+	dialog --maxinput $SI_MAX_I --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $PART_ITEMS 2>../stats/mount-rename
 	ret=$?
 
 	# cancel

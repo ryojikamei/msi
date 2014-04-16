@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/mount
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Configure Network for IPv4 "
 
 #REQUIREMENTS
@@ -66,7 +66,7 @@ while [ "$ret" -eq 3 ]; do
 
 	# show
 	msg="Set default hostname and domainname. Note that they are overwritten if the dhcpclient was gotten those information."
-	dialog --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/net-ipv4-rename
+	dialog --max-input $SI_MAX_I --backtitle "$SI_BACKTITLE" --title "$SI_TITLE" --inputmenu "$msg" $SI_MAX_H $SI_MAX_W $MENU_H $NET_ITEMS 2>../stats/net-ipv4-rename
 	ret=$?
 
 	# cancel

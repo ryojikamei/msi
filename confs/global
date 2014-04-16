@@ -1,11 +1,16 @@
 PATH=/usr/bin:/bin:/usr/sbin:/sbin
 INSTROOT=/
 
-SI_DISTNAME="NoName Linux"
-SI_BACKTITLE="$SI_DISTNAME Installer"
+SI_DISTNAME=NoName_Linux
+SI_USERNAME=noname
+SI_HOSTNAME=noname
+SI_DOMAINNAME=linux.name
+SI_BACKTITLE="${SI_DISTNAME}_Installer"
 
 SI_MAX_H="19"
 SI_MAX_W="76"
+SI_MAX_I="63"
+SI_MAX_L="255"
 
 D_ECHO="echo"
 D_CAT="cat"

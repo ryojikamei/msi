@@ -3,7 +3,7 @@
 #CONFS
 source ../confs/global
 source ../confs/mkfs
-source ../stat/personalize  
+source ../stats/personalize  
 SI_TITLE=" Format Filesystems "
 
 #REQUIREMENTS
